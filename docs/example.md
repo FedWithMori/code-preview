@@ -24,6 +24,17 @@ ReactDOM.render(instance);
 ```
 <!--end-code-->
 
+<!--start-code-->
+```js
+const instance2 = (
+  <Button>
+    Test2
+  </Button>
+);
+ReactDOM.render(instance2);
+```
+<!--end-code-->
+
 > 可以试着手动修改代码
 
 Markdown 源文件: [example.md](https://raw.githubusercontent.com/simonguo/react-code-view/master/docs/example.md)
