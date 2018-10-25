@@ -1,11 +1,6 @@
-# react-code-view
+# code-preview
 
-
-## 背景
-
-让 Markdown 中的代码可以实时运行，为什么会有这样一个需求？
-
-在我们前端团队中，技术相关的文档都采用 Markdown 编写， 文档中往往会伴随很多示例代码，我们希望大家在阅读文档的时候，可以运行示例代码，看到效果。
+##### 代码fork自[simonguo](https://github.com/simonguo/react-code-view)，为了个性化需求，所以重新导入了一份便于修改。
 
 
 ## 需求
@@ -15,13 +10,6 @@
 - 不影响整个文档流的布局。
 - 支持 React, 支持代码高亮。
 - 可以配置 babel。
-
-
-明确需求以后，写了一个 React 组件来满足这些功能， [`react-code-view`](https://github.com/simonguo/react-code-view) ， 首先看一下效果：
-
-![preview](https://user-images.githubusercontent.com/1203827/44707274-a30c0f80-aad6-11e8-8cc5-9cf7daf4d9e2.gif)
-
-在线预览: https://simonguo.github.io/react-code-view/
 
 
 ## 原理

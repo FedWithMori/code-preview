@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 import trim from 'lodash/trim';
+import ClassNames from 'classnames';
 
 class CodeEditor extends React.Component {
   static propTypes = {
@@ -12,7 +13,11 @@ class CodeEditor extends React.Component {
     lineNumbers: PropTypes.bool,
     lineWrapping: PropTypes.bool,
     tabSize: PropTypes.number,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    buttonClassName: PropTypes.string,
+    showCodeIcon: PropTypes.node,
+    classPrefix: PropTypes.string,
+    $key: PropTypes.string
   };
 
   static defaultProps = {
@@ -20,6 +25,12 @@ class CodeEditor extends React.Component {
     tabSize: 2,
     theme: 'default'
   };
+  constructor() {
+    super();
+    this.state = {
+      isShow: false
+    };
+  }
 
   componentDidMount() {
     const { lineNumbers, lineWrapping, matchBrackets, tabSize, readOnly, theme } = this.props;
@@ -41,31 +52,58 @@ class CodeEditor extends React.Component {
     this.editor.on('change', this.handleChange);
   }
 
-  componentDidUpdate() {
-    const { readOnly } = this.props;
-    if (readOnly) {
-      this.editor.setValue();
-    }
-  }
-
   handleChange = () => {
-    const { readOnly, onChange } = this.props;
+    const { readOnly, onChange, $key } = this.props;
     if (!readOnly && onChange) {
-      onChange(this.editor.getValue());
+      onChange(this.editor.getValue(), $key);
     }
   };
 
-  render() {
-    const { style, className, code } = this.props;
+  addPrefix = name => {
+    const { classPrefix } = this.props;
+    if (classPrefix) {
+      return `${classPrefix}-${name}`;
+    }
+    return name;
+  };
 
+  handleShowCode = () => {
+    const { isShow } = this.state;
+    this.setState({
+      isShow: !isShow
+    });
+  }
+
+  render() {
+    const { style, code, buttonClassName, showCodeIcon } = this.props;
+    const { isShow } = this.state;
+    const icon = (
+      <span className="icon-code">
+        {isShow ? '</>' : '< >'}
+      </span>
+    );
+    const codeViewClass = `doc-code ${isShow ? 'show' : ''}`;
     return (
-      <div style={style} className={className}>
-        <textarea
-          ref={ref => {
-            this.textarea = ref;
-          }}
-          defaultValue={trim(code)}
-        />
+      <div className="code-view-wrap">
+        <div className="code-view-toolbar">
+          <div
+            className={ClassNames(
+              this.addPrefix('btn-code'),
+              buttonClassName
+            )}
+            onClick={this.handleShowCode}
+          >
+            {typeof showCodeIcon !== 'undefined' ? showCodeIcon : icon}
+          </div>
+        </div>
+        <div style={style} className={codeViewClass}>
+          <textarea
+            ref={ref => {
+              this.textarea = ref;
+            }}
+            defaultValue={trim(code)}
+          />
+        </div>
       </div>
     );
   }

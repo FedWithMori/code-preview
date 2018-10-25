@@ -10,7 +10,6 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const ReactDOM = require('react-dom');
 const { Markdown } = require('react-markdown-reader');
-const classNames = require('classnames');
 
 class CodeView extends React.Component {
   static propTypes = {
@@ -29,7 +28,8 @@ class CodeView extends React.Component {
     delay: 0,
     babelTransformOptions: {
       presets: ['stage-0', 'react', 'es2015']
-    }
+    },
+    readOnly: true
   };
   constructor(props) {
     super(props);
@@ -41,7 +41,8 @@ class CodeView extends React.Component {
       code,
       showCode: props.showCode,
       hasError: false,
-      errorMessage: null
+      errorMessage: null,
+      exampleList: []
     };
     this.executeCode = this.executeCode.bind(this);
 
@@ -50,43 +51,57 @@ class CodeView extends React.Component {
     }, props.delay);
   }
 
-  executeCode(nextCode) {
+  executeCode() {
     const { babelTransformOptions, dependencies } = this.props;
+    const { code } = this.state;
     const originalRender = ReactDOM.render;
     let hasError = false;
-    ReactDOM.render = element => {
-      this.initialExample = element;
-    };
-    try {
-      let code = window.Babel.transform(nextCode || this.state.code, babelTransformOptions).code;
-      let statement = '';
-
-      if (dependencies) {
-        Object.keys(dependencies).forEach(key => {
-          statement += `var ${key}= dependencies.${key};\n `;
+    let { exampleList } = this.state;
+    Object.keys(code).forEach(item => {
+      ReactDOM.render = element => {
+        exampleList.push({
+          [item]: element
         });
-      }
+        this.setState({
+          exampleList
+        });
+      };
+      try {
+        let transformCode = window.Babel.transform(code[item], babelTransformOptions).code;
+        let statement = '';
 
-      /* eslint-disable */
-      eval(`${statement} ${code}`);
-      /* eslint-enable */
-    } catch (err) {
-      hasError = true;
-      console.error(err);
-    } finally {
-      ReactDOM.render = originalRender;
-      if (!hasError) {
-        this.forceUpdate();
+        if (dependencies) {
+          Object.keys(dependencies).forEach(key => {
+            statement += `var ${key}= dependencies.${key};\n `;
+          });
+        }
+
+        /* eslint-disable */
+        eval(`${statement} ${transformCode}`);
+        /* eslint-enable */
+      } catch (err) {
+        hasError = true;
+        console.error(err);
+      } finally {
+        ReactDOM.render = originalRender;
+        if (!hasError) {
+          this.forceUpdate();
+        }
       }
-    }
+    });
   }
 
-  handleCodeChange = val => {
+  handleCodeChange = (val, key) => {
+    const { code } = this.state;
+    code[key] = val;
     this.setState({
       hasError: false,
-      errorMessage: null
+      errorMessage: null,
+      code,
+      exampleList: []
+    }, () => {
+      this.executeCode();
     });
-    this.executeCode(val);
   };
 
   handleShowCode = () => {
@@ -100,59 +115,49 @@ class CodeView extends React.Component {
       errorMessage: error.message
     });
   };
-
-  addPrefix = name => {
-    const { classPrefix } = this.props;
-    if (classPrefix) {
-      return `${classPrefix}${name}`;
-    }
-    return name;
-  };
-
-  renderExample() {
+  renderExample(example) {
     const { hasError, errorMessage } = this.state;
     return (
       <Preview hasError={hasError} errorMessage={errorMessage} onError={this.handleError}>
-        <div>{this.initialExample ? this.initialExample : <div>Loading...</div>}</div>
+        <div>{ example || <div>Loading...</div> }</div>
       </Preview>
     );
   }
+  renderExampleAll = () => {
+    const { showCodeIcon, buttonClassName, classPrefix, readOnly } = this.props;
+    const { code } = this.state;
+    const { exampleList } = this.state;
+
+    const exampleListDom = exampleList && exampleList.map((item) => {
+      const key = Object.keys(item).join();
+      return (
+        <div className="code-view-wrapper" key={key}>
+          {this.renderExample(item[key])}
+          <CodeEditor
+            lineNumbers
+            $key={key}
+            onChange={this.handleCodeChange}
+            theme="base16-light"
+            code={code[key]}
+            buttonClassName={buttonClassName}
+            showCodeIcon={showCodeIcon}
+            classPrefix={classPrefix}
+            readOnly={readOnly}
+          />
+        </div>);
+    })
+    return exampleListDom;
+  }
+
 
   render() {
-    const { className, style, showCodeIcon, buttonClassName } = this.props;
-    const { showCode, beforeHTML, afterHTML } = this.state;
-    const icon = (
-      <span>
-        <i className={classNames(this.addPrefix('icon'), this.addPrefix('icon-code'))} />
-      </span>
-    );
+    const { className, style } = this.props;
+    const { beforeHTML, afterHTML } = this.state;
 
     return (
       <div className={className} style={style}>
         <Markdown>{beforeHTML}</Markdown>
-        <div className="code-view-wrapper">
-          {this.renderExample()}
-          <div className="code-view-toolbar">
-            <button
-              className={classNames(
-                this.addPrefix('btn'),
-                this.addPrefix('btn-xs'),
-                buttonClassName
-              )}
-              onClick={this.handleShowCode}
-            >
-              {typeof showCodeIcon !== 'undefined' ? showCodeIcon : icon}
-            </button>
-          </div>
-          <CodeEditor
-            lineNumbers
-            key="jsx"
-            onChange={this.handleCodeChange}
-            className={`doc-code ${showCode ? 'show' : ''}`}
-            theme="base16-light"
-            code={this.state.code}
-          />
-        </div>
+        {this.renderExampleAll()}
         <Markdown>{afterHTML}</Markdown>
       </div>
     );
