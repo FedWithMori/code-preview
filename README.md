@@ -86,9 +86,10 @@ import { Button } from 'rsuite';
 ```
 
 源代码都统一写在 markdown 中，参考:
-[example.md](https://raw.githubusercontent.com/simonguo/react-code-view/master/docs/example.md)
+[example.md](https://github.com/FedWithMori/code-preview/blob/master/docs/example.md)
 
 > 这里需要注意的是把需要运行的代码一定要放在 `<!--start-code-->` 与  `<!--end-code-->` 之间。
+> 最后一个代码块以后的内容需要用<!--parameter-description-->声明一下
 
 
 ## API

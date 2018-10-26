@@ -67,7 +67,7 @@ class CodeView extends React.Component {
         });
       };
       try {
-        let transformCode = window.Babel.transform(code[item], babelTransformOptions).code;
+        let transformCode = window.Babel.transform(code[item][0], babelTransformOptions).code;
         let statement = '';
 
         if (dependencies) {
@@ -138,7 +138,7 @@ class CodeView extends React.Component {
             $key={key}
             onChange={this.handleCodeChange}
             theme="base16-light"
-            code={code[key]}
+            code={code}
             buttonClassName={buttonClassName}
             showCodeIcon={showCodeIcon}
             classPrefix={classPrefix}

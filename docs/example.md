@@ -1,4 +1,4 @@
-# React Code View
+# React Code Preview
 
 ## 背景
 
@@ -14,6 +14,7 @@
 - 支持 React, 支持代码高亮
 
 <!--start-code-->
+###### 案例一
 ```js
 const instance = (
   <Button>
@@ -25,6 +26,7 @@ ReactDOM.render(instance);
 <!--end-code-->
 
 <!--start-code-->
+###### 案例二
 ```js
 const instance2 = (
   <Button>
@@ -35,7 +37,8 @@ ReactDOM.render(instance2);
 ```
 <!--end-code-->
 
-> 可以试着手动修改代码
+<!--parameter-description-->
+### 其它声明
 
-Markdown 源文件: [example.md](https://raw.githubusercontent.com/simonguo/react-code-view/master/docs/example.md)
-Github: [react-code-view](https://github.com/simonguo/react-code-view)
+Markdown 源文件: [example.md](https://github.com/FedWithMori/code-preview/blob/master/docs/example.md)
+Github: [react-code-view](https://github.com/FedWithMori/code-preview)

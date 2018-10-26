@@ -10,7 +10,7 @@ export default function parseHTML(source) {
   }
 
   const findCode = source.match(/<!-+ ?start-code ?-+>([\s\S]+?)<!-+ ?end-code ?-+>/gi);
-  let code = {};
+  const code = {};
 
   if (!findCode) {
     return {
@@ -19,7 +19,10 @@ export default function parseHTML(source) {
   }
 
   findCode.forEach((item, index) => {
-    code[`example-${index}`] = text(parseDom(item));
+    const explain = item.match(/<h[1-6]+ id="-">([\s\S]+)<\/h[1-6]>/gi)[0];
+    const newItem = item.replace(explain, '');
+    code[`example-${index}`] = new Array(text(parseDom(newItem)));
+    code[`example-${index}`].push(text(parseDom(explain)));
   });
   const beforeHTML = source.match(/([\s\S]+?)<!-+ ?start-code ?-+>/gi)[0];
   const afterHTML = source.match(/<!-+ ?parameter-description ?-+>([\s\S]+)/gi);

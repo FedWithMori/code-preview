@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const markdownRenderer = require('react-markdown-reader').renderer;
+const markdownRenderer = require('marked').renderer;
 
 const { NODE_ENV } = process.env;
 
@@ -51,7 +51,8 @@ const common = {
     hot: true,
     disableHostCheck: true,
     contentBase: path.resolve(__dirname, ''),
-    publicPath: '/'
+    publicPath: '/',
+    open: true
   },
   output: {
     path: path.resolve(__dirname, 'assets'),

@@ -75,7 +75,7 @@ class CodeEditor extends React.Component {
   }
 
   render() {
-    const { style, code, buttonClassName, showCodeIcon } = this.props;
+    const { style, code, buttonClassName, showCodeIcon, $key } = this.props;
     const { isShow } = this.state;
     const icon = (
       <span className="icon-code">
@@ -86,6 +86,7 @@ class CodeEditor extends React.Component {
     return (
       <div className="code-view-wrap">
         <div className="code-view-toolbar">
+
           <div
             className={ClassNames(
               this.addPrefix('btn-code'),
@@ -95,13 +96,16 @@ class CodeEditor extends React.Component {
           >
             {typeof showCodeIcon !== 'undefined' ? showCodeIcon : icon}
           </div>
+          <div className="explain-wrap">
+            {code[$key][1]}
+          </div>
         </div>
         <div style={style} className={codeViewClass}>
           <textarea
             ref={ref => {
               this.textarea = ref;
             }}
-            defaultValue={trim(code)}
+            defaultValue={trim(code[$key][0])}
           />
         </div>
       </div>

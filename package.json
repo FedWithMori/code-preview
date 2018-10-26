@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simonguo/react-code-view.git"
+    "url": "https://github.com/FedWithMori/code-preview.git"
   },
   "files": [
     "CHANGELOG.md",
@@ -22,18 +22,17 @@
     "code-view",
     "editor"
   ],
-  "author": "simonguo.2009@gmail.com",
+  "author": "zhang5431235@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/simonguo/react-code-view/issues"
+    "url": "https://github.com/FedWithMori/code-preview/wiki"
   },
-  "homepage": "https://github.com/simonguo/react-code-view#readme",
+  "homepage": "https://github.com/FedWithMori/code-preview#readme",
   "dependencies": {
     "classnames": "^2.2.5",
     "codemirror": "^5.32.0",
     "lodash": "^4.17.5",
-    "prop-types": "^15.6.0",
-    "react-markdown-reader": "^1.0.1"
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "^0.14.9 || >=15.3.0",
@@ -69,6 +68,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "markdown-loader": "2.0.0",
+    "marked": "^0.5.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-hot-loader": "^3.0.0-beta.6",
