@@ -14,7 +14,7 @@
 - 支持 React, 支持代码高亮
 
 <!--start-code-->
-###### 案例一
+###### 案例一: example
 ```js
 const instance = (
   <Button>
