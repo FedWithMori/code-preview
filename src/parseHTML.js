@@ -19,7 +19,7 @@ export default function parseHTML(source) {
   }
 
   findCode.forEach((item, index) => {
-    const explainRes = item.match(/<h[1-6]+ id="[\s\S]+">([\s\S]+)<\/h[1-6]>/gi)[0];
+    const explainRes = item.match(/<h[1-6]+ id="[\s\S]+">([\s\S]+)<\/h[1-6]>/gi);
     const explain = explainRes ? explainRes[0] : '';
     const newItem = item.replace(explain, '');
     code[`example-${index}`] = new Array(text(parseDom(newItem)));
