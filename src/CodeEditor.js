@@ -7,7 +7,7 @@ import ClassNames from 'classnames';
 class CodeEditor extends React.Component {
   static propTypes = {
     readOnly: PropTypes.bool,
-    code: PropTypes.string,
+    code: PropTypes.object,
     theme: PropTypes.string,
     matchBrackets: PropTypes.bool,
     lineNumbers: PropTypes.bool,
