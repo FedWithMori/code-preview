@@ -110,9 +110,10 @@
 .markdown code {
     border-radius: 3px;
     word-wrap: break-word;
-    border: 1px solid #cccccc;
-    padding: 0 5px;
+    padding: .2em .4em;
     margin: 0 2px;
+    background-color: #f2f4f5;
+    color: #314659;
 }
 .markdown img {
     max-width: 100%;
@@ -144,6 +145,7 @@
 .markdown table tr td {
     border-bottom: 1px solid #ebedf0;
     color: #314659;
+    line-height: 24px;
 }
 .markdown table tr td:first-child {
     color: #003a8c;
