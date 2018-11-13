@@ -5,6 +5,7 @@ import CodeView from '../src';
 
 import './less/index.less';
 import '../src/less/index.less';
+import '../src/less/markdown.css';
 
 class App extends React.Component {
   render() {

@@ -38,7 +38,11 @@ ReactDOM.render(instance2);
 <!--end-code-->
 
 <!--parameter-description-->
-### 其它声明
+#### 属性
+
+ 参数名 | 说明 | 类型 | 可选值 | 默认值  
+ --- | --- | --- | --- | ---  
+type | 按钮类型 | string | primary、danger、text | -  
 
 Markdown 源文件: [example.md](https://github.com/FedWithMori/code-preview/blob/master/docs/example.md)
 Github: [react-code-view](https://github.com/FedWithMori/code-preview)

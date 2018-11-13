@@ -68,7 +68,7 @@ const common = {
       ],
       exclude: /node_modules/
     }, {
-      test: /\.less$/,
+      test: /\.(css|less)$/,
       loader: extractLess.extract({
         use: [{
           loader: 'css-loader'

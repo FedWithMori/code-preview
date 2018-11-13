@@ -21,7 +21,8 @@ class CodeView extends React.Component {
     dependencies: PropTypes.object,
     babelTransformOptions: PropTypes.object,
     buttonClassName: PropTypes.string,
-    showCodeIcon: PropTypes.node
+    showCodeIcon: PropTypes.node,
+    readOnly: PropTypes.bool
   };
 
   static defaultProps = {
@@ -128,7 +129,7 @@ class CodeView extends React.Component {
     const { code } = this.state;
     const { exampleList } = this.state;
 
-    const exampleListDom = exampleList && exampleList.map((item) => {
+    const exampleListDom = exampleList && exampleList.map(item => {
       const key = Object.keys(item).join();
       return (
         <div className="code-view-wrapper" key={key}>
@@ -145,7 +146,7 @@ class CodeView extends React.Component {
             readOnly={readOnly}
           />
         </div>);
-    })
+    });
     return exampleListDom;
   }
 
